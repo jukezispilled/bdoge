@@ -103,7 +103,7 @@ function App() {
         </div>
       </div>
       <div className="h-min py-[15%] w-screen border-y-2 bg-[#0a192f] flex flex-col items-center">
-        <h2 className="text-3xl text-white mb-8">Roadmap</h2>
+        <h2 className="text-4xl md:text-5xl font-custom text-white mb-8">Roadmap</h2>
         <div className="w-11/12 md:w-2/3">
           <div className="relative">
             <div className="absolute w-1 bg-gray-300 h-full left-1/2 transform -translate-x-1/2"></div>

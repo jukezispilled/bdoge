@@ -45,7 +45,7 @@ function App() {
             </a>
           </div>
         <div className='w-[120%] rotate-[30deg]'>
-          <Marquee gradientWidth={100} speed={100}>
+          <Marquee gradientWidth={100} speed={120}>
             {topMarqueeImages}
             {topMarqueeImages} {/* Duplicate for seamless loop */}
           </Marquee>
@@ -57,7 +57,7 @@ function App() {
               <img
                 key={index + 1}
                 src={`i${index + 1}.png`}
-                className={`absolute top-0 left-0 w-full h-full rounded-full border-4 border-slate-800 transition-opacity duration-100 ${
+                className={`absolute top-0 left-0 rounded-full border-4 border-slate-800 transition-opacity duration-0 ${
                   currentImage === index + 1 ? 'opacity-100' : 'opacity-0'
                 }`}
                 alt={`Profile ${index + 1}`}
@@ -68,7 +68,7 @@ function App() {
         </div>
 
         <div className='w-[120%] rotate-[30deg] -translate-x-[15%] -translate-y-[10%]'>
-          <Marquee gradientWidth={100} speed={100} direction="right">
+          <Marquee gradientWidth={100} speed={120} direction="right">
             {bottomMarqueeImages}
             {bottomMarqueeImages} {/* Duplicate for seamless loop */}
           </Marquee>

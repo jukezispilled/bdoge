@@ -102,7 +102,93 @@ function App() {
           </div>
         </div>
       </div>
-      <div className='h-screen w-screen flex-col justify-center items-center gap-12 hidden md:flex border-t-2 bg-[#0a192f] text-white'>
+      <div className="h-min py-[15%] w-screen border-y-2 bg-[#0a192f] flex flex-col items-center">
+        <h2 className="text-3xl text-white mb-8">Roadmap</h2>
+        <div className="w-11/12 md:w-2/3">
+          <div className="relative">
+            <div className="absolute w-1 bg-gray-300 h-full left-1/2 transform -translate-x-1/2"></div>
+
+            <div className="mb-8 flex justify-between items-center w-full">
+              <div className="order-1 w-5/12"></div>
+              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                <h1 className="mx-auto text-white font-semibold text-lg">1</h1>
+              </div>
+              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <h3 className="mb-1 font-bold text-white text-lg">20K</h3>
+                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
+                  Paying Game.com
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-8 flex justify-between items-center w-full">
+              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <h3 className="mb-1 font-bold text-white text-lg">KOTH</h3>
+                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
+                  Paying Dex
+                </p>
+              </div>
+              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                <h1 className="mx-auto text-white font-semibold text-lg">2</h1>
+              </div>
+              <div className="order-1 w-5/12"></div>
+            </div>
+
+            <div className="mb-8 flex justify-between items-center w-full">
+              <div className="order-1 w-5/12"></div>
+              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                <h1 className="mx-auto text-white font-semibold text-lg">3</h1>
+              </div>
+              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <h3 className="mb-1 font-bold text-white text-lg">50k</h3>
+                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
+                  Burn 3 Million Tokens
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-8 flex justify-between items-center w-full">
+              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <h3 className="mb-1 font-bold text-white text-lg">Migrating...</h3>
+                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
+                  Dex ads
+                </p>
+              </div>
+              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                <h1 className="mx-auto text-white font-semibold text-lg">4</h1>
+              </div>
+              <div className="order-1 w-5/12"></div>
+            </div>
+
+            <div className="mb-8 flex justify-between items-center w-full">
+              <div className="order-1 w-5/12"></div>
+              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                <h1 className="mx-auto text-white font-semibold text-lg">5</h1>
+              </div>
+              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <h3 className="mb-1 font-bold text-white text-lg">Raydium</h3>
+                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
+                  Fatality Bot
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-8 flex justify-between items-center w-full">
+              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                <h3 className="mb-1 font-bold text-white text-lg">100K+</h3>
+                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
+                  Finder Trending + KOLs
+                </p>
+              </div>
+              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                <h1 className="mx-auto text-white font-semibold text-lg">6</h1>
+              </div>
+              <div className="order-1 w-5/12"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='h-screen w-screen flex-col justify-center items-center gap-12 hidden md:flex bg-[#0a192f] text-white'>
         <div className='text-4xl md:text-5xl font-custom text-center'>pfp maker</div>
         <PfpMaker />
       </div>

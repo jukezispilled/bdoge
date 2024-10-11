@@ -119,10 +119,10 @@ function App() {
         <EmojiRain /> {/* Add the EmojiRain component here */}
 
         <div className='absolute top-5 left-5 flex justify-center items-center z-10 space-x-2 font-custom'>
-          <a href="https://x.com/" className='text-2xl underline'>
+          <a href="https://x.com/bDOGEsol" className='text-2xl underline'>
             X
           </a>
-          <a href="https://t.me/" className='text-2xl underline'>
+          <a href="https://t.me/bDOGEportal" className='text-2xl underline'>
             TG
           </a>
         </div>

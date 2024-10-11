@@ -110,7 +110,7 @@ function App() {
   }, [imageSources.length]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('soon');
+    navigator.clipboard.writeText('CPwdnEwk5oRsFUqD1MQd5SNiG7wtxTRPUEs2nJdnpump');
   };
 
   return (
@@ -154,7 +154,7 @@ function App() {
                 <CopyIcon />
               </button>
               <div className='text-[7px] md:text-base overflow-x-auto whitespace-nowrap font-custom'>
-                updating...
+              CPwdnEwk5oRsFUqD1MQd5SNiG7wtxTRPUEs2nJdnpump
               </div>
             </div>
           </Window>

@@ -36,3 +36,51 @@
     transform: rotate(360deg);
   }
 }
+
+.emoji-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Allow clicking through emojis */
+  overflow: hidden;
+}
+
+.falling-emoji {
+  position: absolute;
+  font-size: 24px; /* Adjust size as needed */
+  animation-name: fall;
+  animation-timing-function: linear;
+  opacity: 0; /* Fade out effect */
+  animation-fill-mode: forwards;
+}
+
+@keyframes fall {
+  0% {
+    top: -10%; /* Start above the screen */
+    opacity: 1; /* Fully visible at start */
+  }
+  100% {
+    top: 100%; /* End at the bottom of the screen */
+    opacity: 0.6; /* Fade out */
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(250px) translateX(-50%);
+  }
+}
+
+.floating-container {
+  position: fixed;
+  left: 70%;
+  bottom: -100%;
+  transition: bottom 1s ease-in-out;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-container.visible {
+  bottom: -10px;
+}

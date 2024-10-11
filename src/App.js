@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Marquee from 'react-fast-marquee';
-import logo from './logo.svg';
 import './App.css';
 import PfpMaker from './PfpMaker';
+import { Window, WindowHeader, WindowContent, Button } from 'react95';
+import { ThemeProvider } from 'styled-components';
+import original from 'react95/dist/themes/original';
+import Marquee from 'react-fast-marquee';
 
 const CopyIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -10,189 +12,166 @@ const CopyIcon = () => (
   </svg>
 );
 
-function App() {
-  const [copied, setCopied] = useState(false);
-  const [currentImage, setCurrentImage] = useState(1);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText('6cf7cPe9at2KwJfVeoWhXackFf9nGaGKptkmAmjLpump');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+const EmojiRain = () => {
+  const emojis = ['🍼', '🎀', '🧸', '🛏️', '🍭'];
+  const [emojiElements, setEmojiElements] = useState([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImage((prevImage) => (prevImage % 16) + 1);
-    }, 7000 / 16); // 5 seconds divided by 16 images
+      const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+      const leftPosition = Math.random() * 100;
+      const duration = Math.random() * 3 + 2; // Duration between 2s to 5s
+
+      setEmojiElements((prev) => [
+        ...prev,
+        <span
+          key={Date.now() + Math.random()} // Unique key for each emoji
+          className="falling-emoji"
+          style={{ left: `${leftPosition}vw`, animationDuration: `${duration}s` }}
+        >
+          {emoji}
+        </span>
+      ]);
+    }, 100); // Adjust the interval to control how frequently emojis fall
 
     return () => clearInterval(interval);
+  }, [emojis]);
+
+  return <div className="emoji-rain">{emojiElements}</div>;
+};
+
+const FloatingImageWithChat = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const fullMessage = "you better take care of my baby...or else!";
+
+  useEffect(() => {
+    const showTimeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 500);
+
+    const hideTimeout = setTimeout(() => {
+      setIsVisible(false);
+    }, 10000);
+
+    return () => {
+      clearTimeout(showTimeout);
+      clearTimeout(hideTimeout);
+    };
   }, []);
 
-  const createMarqueeImages = (start, end) => {
-    return [...Array(end - start + 1)].map((_, index) => (
-      <img
-        key={start + index}
-        src={`i${start + index}.png`}
-        className="h-32 w-32 md:h-40 md:w-40 mx-4 rounded-full"
-        alt={`Marquee ${start + index}`}
-      />
-    ));
-  };
-
-  const topMarqueeImages = createMarqueeImages(1, 8);
-  const bottomMarqueeImages = createMarqueeImages(9, 16);
-
   return (
-    <div className=''>
-      <div className="h-screen w-screen flex flex-col justify-between bg-[#0a192f] overflow-clip text-white">
-          <div className='absolute top-5 left-5 flex justify-center items-center z-10'>
-            <a href="https://x.com/pfpdog" className=''>
-              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='size-10 md:size-12 md:hover:scale-105 transition ease-in-out duration-150' fill="#facc15" viewBox="0 0 50 50">
-                <path d="M 6.9199219 6 L 21.136719 26.726562 L 6.2285156 44 L 9.40625 44 L 22.544922 28.777344 L 32.986328 44 L 43 44 L 28.123047 22.3125 L 42.203125 6 L 39.027344 6 L 26.716797 20.261719 L 16.933594 6 L 6.9199219 6 z"></path>
-              </svg>
-            </a>
-            <a href="https://t.me/PFPportal" className=''>
-              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className='size-10 md:size-12 md:hover:scale-105 transition ease-in-out duration-150' fill="#facc15" viewBox="0 0 50 50">
-                <path d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z"></path>
-              </svg>
-            </a>
-          </div>
-        <div className='w-[120%] rotate-[30deg]'>
-          <Marquee gradientWidth={100} speed={120}>
-            {topMarqueeImages}
-            {topMarqueeImages} {/* Duplicate for seamless loop */}
-          </Marquee>
-        </div>
-
-        <div className="flex flex-col items-center text-center">
-          <div className="w-[45%] md:w-[25%] aspect-square relative">
-            {[...Array(16)].map((_, index) => (
-              <img
-                key={index + 1}
-                src={`i${index + 1}.png`}
-                className={`absolute top-0 left-0 rounded-full border-4 border-slate-800 transition-opacity duration-0 ${
-                  currentImage === index + 1 ? 'opacity-100' : 'opacity-0'
-                }`}
-                alt={`Profile ${index + 1}`}
-              />
-            ))}
-          </div>
-          <span className="mt-4 text-4xl md:text-6xl font-custom text-center">pfp</span>
-        </div>
-
-        <div className='w-[120%] rotate-[30deg] -translate-x-[15%] -translate-y-[10%]'>
-          <Marquee gradientWidth={100} speed={120} direction="right">
-            {bottomMarqueeImages}
-            {bottomMarqueeImages} {/* Duplicate for seamless loop */}
-          </Marquee>
-        </div>
-        <div 
-          className='absolute bottom-5 right-5 flex justify-center'
-        >
-          <div className='flex flex-col sm:flex-row justify-center bg-slate-100 rounded-xl md:rounded-full z-10 items-center gap-1 md:gap-3 px-5 py-3 max-w-full border-2 border-yellow-300'>
-            <button
-              onClick={handleCopy}
-              className="text-sm bg-yellow-400 md:hover:bg-yellow-500 transition duration-150 ease-in-out text-black py-2 px-4 rounded-full border-2 border-yellow-300 z-10 whitespace-nowrap"
-            >
-              {copied ? 'Copied!' : <CopyIcon />}
-            </button>
-            <div className='text-xs md:text-xl overflow-x-auto whitespace-nowrap font-custom text-black'>
-            6cf7cPe9at2KwJfVeoWhXackFf9nGaGKptkmAmjLpump
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="h-min py-[15%] w-screen border-y-2 bg-[#0a192f] flex flex-col items-center">
-        <h2 className="text-4xl md:text-5xl text-white mb-8 font-custom">Roadmap</h2>
-        <div className="w-11/12 md:w-2/3">
-          <div className="relative">
-            <div className="absolute w-1 bg-gray-300 h-full left-1/2 transform -translate-x-1/2"></div>
-
-            <div className="mb-8 flex justify-between items-center w-full">
-              <div className="order-1 w-5/12"></div>
-              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                <h1 className="mx-auto text-white font-semibold text-lg">1</h1>
-              </div>
-              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                <h3 className="mb-1 font-bold text-white text-lg">20K</h3>
-                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
-                  Paying Game.com
-                </p>
-              </div>
-            </div>
-
-            <div className="mb-8 flex justify-between items-center w-full">
-              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                <h3 className="mb-1 font-bold text-white text-lg">KOTH</h3>
-                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
-                  Paying Dex
-                </p>
-              </div>
-              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                <h1 className="mx-auto text-white font-semibold text-lg">2</h1>
-              </div>
-              <div className="order-1 w-5/12"></div>
-            </div>
-
-            <div className="mb-8 flex justify-between items-center w-full">
-              <div className="order-1 w-5/12"></div>
-              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                <h1 className="mx-auto text-white font-semibold text-lg">3</h1>
-              </div>
-              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                <h3 className="mb-1 font-bold text-white text-lg">50k</h3>
-                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
-                  Burn 3 Million Tokens
-                </p>
-              </div>
-            </div>
-
-            <div className="mb-8 flex justify-between items-center w-full">
-              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                <h3 className="mb-1 font-bold text-white text-lg">Migrating...</h3>
-                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
-                  Dex ads
-                </p>
-              </div>
-              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                <h1 className="mx-auto text-white font-semibold text-lg">4</h1>
-              </div>
-              <div className="order-1 w-5/12"></div>
-            </div>
-
-            <div className="mb-8 flex justify-between items-center w-full">
-              <div className="order-1 w-5/12"></div>
-              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                <h1 className="mx-auto text-white font-semibold text-lg">5</h1>
-              </div>
-              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                <h3 className="mb-1 font-bold text-white text-lg">Raydium</h3>
-                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
-                  Fatality Bot
-                </p>
-              </div>
-            </div>
-
-            <div className="mb-8 flex justify-between items-center w-full">
-              <div className="order-1 bg-gray-800 rounded-lg shadow-xl w-5/12 px-6 py-4">
-                <h3 className="mb-1 font-bold text-white text-lg">100K+</h3>
-                <p className="leading-snug tracking-wide text-white text-opacity-100 text-sm">
-                  Finder Trending + KOLs
-                </p>
-              </div>
-              <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                <h1 className="mx-auto text-white font-semibold text-lg">6</h1>
-              </div>
-              <div className="order-1 w-5/12"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className='h-screen w-screen flex-col justify-center items-center gap-12 hidden md:flex bg-[#0a192f] text-white'>
-        <div className='text-4xl md:text-5xl font-custom text-center'>pfp maker</div>
-        <PfpMaker />
+    <div
+      className={`z-20 w-[40%] hidden md:flex floating-container ${isVisible ? 'visible' : ''}`}
+      style={{
+        position: 'fixed',
+        left: '90%', // Center it horizontally
+        transform: 'translate(-50%, -20%)', // Adjust position to center on small screens
+      }}
+    >
+      <img
+        src="doge.gif"
+        alt="Floating Dog"
+        className='w-full'
+      />
+      <div
+        className='absolute -top-[70px] -left-[50px] md:top-[10px] md:left-[10px]'
+        style={{
+          backgroundColor: 'transparent',
+          padding: '10px',
+          maxWidth: '200px',
+          textAlign: 'center',
+        }}
+      >
+        <Window>
+          <p className='p-1 font-custom'>{fullMessage}</p>
+        </Window>
       </div>
     </div>
+  );
+};
+
+function App() {
+  const [imageIndex, setImageIndex] = useState(0);
+  const imageSources = [
+    'baby.png',
+    'baby1.png',
+    'baby2.png',
+    'baby3.png',
+    'baby4.png',
+    'baby5.png'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageIndex((prevIndex) => (prevIndex + 1) % imageSources.length);
+    }, 500); // Change the image every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [imageSources.length]);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText('soon');
+  };
+
+  return (
+    <ThemeProvider theme={original}>
+      <div className="h-screen w-screen flex flex-col justify-between bg-[#FD89FF] overflow-clip">
+        <EmojiRain /> {/* Add the EmojiRain component here */}
+
+        <div className='absolute top-5 left-5 flex justify-center items-center z-10 space-x-2 font-custom'>
+          <a href="https://x.com/" className='text-2xl underline'>
+            X
+          </a>
+          <a href="https://t.me/" className='text-2xl underline'>
+            TG
+          </a>
+        </div>
+
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center">
+          <Window>
+            <div className='p-3 flex justify-center'>
+              <div className='grid'>
+                <div className="w-[200px] md:w-[300px] aspect-square relative">
+                  <img
+                    src={imageSources[imageIndex]} // Use the image based on the index
+                    className='border-2 border-white transition-opacity duration-0'
+                    alt='Baby Doge'
+                  />
+                </div>
+                <span className="mt-4 text-2xl md:text-4xl font-custom text-center">baby doge</span>
+              </div>
+            </div>
+          </Window>
+        </div>
+
+        <div className='absolute bottom-2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+          <Window>
+            <div className='flex flex-col sm:flex-row justify-center z-10 items-center gap-1 md:gap-3 px-5 py-3 max-w-full'>
+              <button
+                onClick={handleCopy}
+                className="text-sm bg-[#FD89FF] transition duration-150 ease-in-out py-2 px-4 z-10 whitespace-nowrap"
+              >
+                <CopyIcon />
+              </button>
+              <div className='text-[7px] md:text-base overflow-x-auto whitespace-nowrap font-custom'>
+                updating...
+              </div>
+            </div>
+          </Window>
+        </div>
+
+        <FloatingImageWithChat />
+      </div>
+      <div className='py-2 font-custom bg-[#FD89FF] text-black text-2xl border-y-2 border-black hidden md:block'>
+        <Marquee speed={100}>
+          bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE bDOGE&nbsp; 
+        </Marquee>
+      </div>
+      <div className='h-screen w-screen flex-col justify-center items-center gap-12 hidden md:flex bg-[#FD89FF]'>
+        <div className='text-4xl md:text-5xl font-custom text-center'>meme maker</div>
+        <PfpMaker />
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Stage, Layer, Image, Transformer } from 'react-konva';
 import useImage from 'use-image';
+import { Window, WindowHeader, WindowContent, Button } from 'react95';
 
 const PfpMaker = () => {
   const [assets, setAssets] = useState([]);
   const [selectedId, selectShape] = useState(null);
   const stageRef = useRef(null);
 
-  const [basePfp] = useImage('pfp.png');
+  const [basePfp] = useImage('baby.png');
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -52,37 +53,39 @@ const PfpMaker = () => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center bg-[#0a192f] text-white'>
-      <div className='mb-4'>
-        <input type='file' onChange={handleFileUpload} accept='image/*' />
-        <button onClick={handleSave} className='ml-2 px-4 py-2 bg-blue-500 text-white rounded'>Save</button>
-        {selectedId && (
-          <button onClick={handleDelete} className='ml-2 px-4 py-2 bg-red-500 text-white rounded'>Delete</button>
-        )}
+    <Window>
+      <div className='flex flex-col items-center justify-center bg-[#FD89FF] text-white p-2'>
+        <div className='mb-4'>
+          <input type='file' onChange={handleFileUpload} accept='image/*' />
+          <button onClick={handleSave} className='ml-2 px-4 py-2 bg-blue-500 text-white'>Save</button>
+          {selectedId && (
+            <button onClick={handleDelete} className='ml-2 px-4 py-2 bg-red-500 text-white'>Delete</button>
+          )}
+        </div>
+        <Stage width={400} height={400} ref={stageRef}>
+          <Layer>
+            <Image className="border-2 border-black" image={basePfp} width={400} height={400} />
+            {assets.map((asset) => (
+              <AssetImage
+                key={asset.id}
+                shapeProps={asset}
+                isSelected={asset.id === selectedId}
+                onSelect={() => selectShape(asset.id)}
+                onChange={(newAttrs) => {
+                  const newAssets = assets.map(a => {
+                    if (a.id === asset.id) {
+                      return { ...a, ...newAttrs };
+                    }
+                    return a;
+                  });
+                  setAssets(newAssets);
+                }}
+              />
+            ))}
+          </Layer>
+        </Stage>
       </div>
-      <Stage width={400} height={400} ref={stageRef}>
-        <Layer>
-          <Image className="border-2" image={basePfp} width={400} height={400} />
-          {assets.map((asset) => (
-            <AssetImage
-              key={asset.id}
-              shapeProps={asset}
-              isSelected={asset.id === selectedId}
-              onSelect={() => selectShape(asset.id)}
-              onChange={(newAttrs) => {
-                const newAssets = assets.map(a => {
-                  if (a.id === asset.id) {
-                    return { ...a, ...newAttrs };
-                  }
-                  return a;
-                });
-                setAssets(newAssets);
-              }}
-            />
-          ))}
-        </Layer>
-      </Stage>
-    </div>
+    </Window>
   );
 };
 
